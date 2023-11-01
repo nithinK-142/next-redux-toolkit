@@ -3,14 +3,16 @@ import React, { useState } from "react";
 import { logIn, logOut, toggleGodMode } from "@/redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
+import { useAppSelector } from "@/redux/store";
 
 const Authenticate = () => {
   const [userName, setUserName] = useState("");
+  const isAuth = useAppSelector((state) => state.authReducer.value.isAuth);
   const dispatch = useDispatch<AppDispatch>();
 
   const onClickLogIn = () => {
     if (userName !== "") dispatch(logIn(userName));
-    else alert("You need to login first!!");
+    else alert("Enter username first!!");
   };
   const onClickLogOut = () => {
     dispatch(logOut());
@@ -35,10 +37,20 @@ const Authenticate = () => {
         required
       />
       <div className="flex justify-between pt-10">
-        <button type="button" onClick={onClickLogIn} className="btn">
+        <button
+          type="button"
+          onClick={onClickLogIn}
+          className="btn"
+          disabled={isAuth}
+        >
           LogIn
         </button>
-        <button type="button" onClick={onClickLogOut} className="btn">
+        <button
+          type="button"
+          onClick={onClickLogOut}
+          className="btn"
+          disabled={!isAuth}
+        >
           LogOut
         </button>
       </div>
