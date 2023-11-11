@@ -2,8 +2,7 @@
 import React, { useState } from "react";
 import { logIn, logOut, toggleGodMode } from "@/redux/slices/authSlice";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
-import { useAppSelector } from "@/redux/store";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 
 const Authenticate = () => {
   const [userName, setUserName] = useState("");
@@ -18,7 +17,7 @@ const Authenticate = () => {
     dispatch(logOut());
   };
   const onClickToggleGodMode = () => {
-    if (userName !== "") dispatch(toggleGodMode());
+    if (isAuth) dispatch(toggleGodMode());
     else alert("You need to login first!!");
   };
   return (
